@@ -11,7 +11,7 @@ export const ItemCounter = () => {
     <Container 
       mt={{base:'30vh', sm:'50vh'}}
       borderRadius={'0 0 15px 15px'} 
-      bgColor={'whatsapp.100'} 
+      bgColor={'primary'} 
       maxW={{base:'300px'}} 
       h={'150px'} 
       centerContent display={'flex'} 
@@ -23,11 +23,17 @@ export const ItemCounter = () => {
         Nombre item
         </Text>
         <Stack 
+        bgColor={'#249f9c'}
+        borderRadius={'10px'}
+        p={'2px 2px 2px 5px'}
         direction={'row'} 
-        alignItems={'baseline'} 
+        alignItems={'center'} 
         spacing={3}
         >
-          <Text>Cantidad: </Text>
+          <Text
+          color={'white'}
+          fontWeight={'bold'}
+          >Cantidad: </Text>
           <Button 
           variant='navBtn'
           isDisabled = {counter === 0 ? true : false}
@@ -38,6 +44,7 @@ export const ItemCounter = () => {
           <Text
             fontWeight={'bold'}
             fontSize={23}
+            color={'white'}
           >
             {counter}
           </Text>
