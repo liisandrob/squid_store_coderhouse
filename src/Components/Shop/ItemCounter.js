@@ -3,24 +3,33 @@ import React, { useState } from 'react';
 import { Container, Button, Text, Stack } from "@chakra-ui/react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
-export const ItemCounter = () => {
+export const ItemCounter = ({
+  name,
+  price
+}) => {
 
   const [counter, setCounter] = useState(0);
 
   return(
     <Container 
-      mt={{base:'30vh', sm:'50vh'}}
+      shadow={'-1px 1px 15px 4px #FFFFFF'}
       borderRadius={'0 0 15px 15px'} 
       bgColor={'primary'} 
       maxW={{base:'300px'}} 
-      h={'150px'} 
+      h={'200px'} 
       centerContent display={'flex'} 
       justifyContent={'space-around'}>
         <Text
           fontWeight={'bold'}
           fontSize={20}
         >
-        Nombre item
+        {name}
+        </Text>
+        <Text
+          fontWeight={'bold'}
+          fontSize={20}
+        >
+        Precio: ${price}
         </Text>
         <Stack 
         bgColor={'#249f9c'}
