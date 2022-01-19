@@ -9,6 +9,8 @@ export const ItemCounter = ({
   stock
 }) => {
 
+  const priceArgFormat = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' })
+
   const [counter, setCounter] = useState(1);
 
   return(
@@ -30,7 +32,7 @@ export const ItemCounter = ({
           fontWeight={'bold'}
           fontSize={20}
         >
-        Precio: ${price}
+        Precio: {priceArgFormat.format(price)}
         </Text>
         <Stack 
         bgColor={'#249f9c'}
