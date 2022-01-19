@@ -7,13 +7,7 @@ export const ItemList = ({ items }) => {
     direction={'row'}
     spacing={8}
     mt={{base:'5vh', sm:'5vh'}}>
-      {
-        items && items.map((item, i) => {
-          return (
-            <Item key={i} item={item}  />
-          )
-        })
-      }
+      {items?.map((item, i) => <Item key={i} {...item}/>)}
     </Stack>
   )
 }

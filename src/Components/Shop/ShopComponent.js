@@ -9,14 +9,20 @@ const db = [
   {
     imgUrl : 'https://cdn.shopify.com/s/files/1/0565/8034/1957/products/SquidGameTshirt-OrderSquidGameTeesOrganiccottonTshirtOnline-women-black.jpg?v=1634380538',
     type: 'Ropa',
-    price: 200,
+    price: 2000,
     name: 'Remera Modelo 1'
   },
   {
     imgUrl : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-nTDAf0HeW20Zym4atrow2DXJaudKn05v-A&usqp=CAU',
     type: 'Ropa',
-    price: 150,
+    price: 1500,
     name: 'Remera Modelo 2'
+  },
+  {
+    imgUrl : 'https://m.media-amazon.com/images/I/51YASTF6vmL._AC_UL1057_.jpg',
+    type: 'Merchandising',
+    price: 700,
+    name: 'Llavero'
   },
 ]
 

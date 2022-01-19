@@ -55,7 +55,7 @@ export const NavBar = () =>
           _active={style.menuItem._active}
           _focus={style.menuItem._focus}
           >
-            Juguetes
+            Merchandising
           </MenuItem>
         </MenuList>
       </Menu>

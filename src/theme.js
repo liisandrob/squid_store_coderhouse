@@ -1,7 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 
 
-import bgImg from './Assets/squid-mask.svg'
+import bgImg from 'Assets/squid-mask.svg'
 
 export default extendTheme({
   styles: {

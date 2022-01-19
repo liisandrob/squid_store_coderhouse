@@ -2,7 +2,7 @@ import { Stack, Box, Image } from '@chakra-ui/react';
 
 import { NavBar } from "./NavBarComponent";
 
-import logo from "../../Assets/logo.png";
+import logo from "Assets/logo.png";
 
 export const Header = () => 
   <header>
