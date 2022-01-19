@@ -5,10 +5,11 @@ import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
 export const ItemCounter = ({
   name,
-  price
+  price,
+  stock
 }) => {
 
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(1);
 
   return(
     <Container 
@@ -45,7 +46,7 @@ export const ItemCounter = ({
           >Cantidad: </Text>
           <Button 
           variant='navBtn'
-          isDisabled = {counter === 0 ? true : false}
+          isDisabled = {counter === 1 ? true : false}
           onClick={() => setCounter(counter - 1)} 
           >
             <FaArrowDown/>
@@ -59,6 +60,7 @@ export const ItemCounter = ({
           </Text>
           <Button 
           variant='navBtn'
+          isDisabled = {counter === stock ? true : false}
           onClick={() => setCounter(counter + 1)}
           >
             <FaArrowUp/>

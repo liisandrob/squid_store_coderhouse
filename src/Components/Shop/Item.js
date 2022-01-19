@@ -2,7 +2,7 @@
 import { Stack, Image } from "@chakra-ui/react";
 import { ItemCounter } from "./ItemCounter";
 
-export const Item = ({ name, price, imgUrl }) => {
+export const Item = ({ name, price, stock, imgUrl }) => {
   return (
     <Stack 
     maxW={{base:'300px'}} 
@@ -16,7 +16,9 @@ export const Item = ({ name, price, imgUrl }) => {
       />
       <ItemCounter 
       price={price} 
-      name={name}/>
+      name={name}
+      stock={stock}
+      />
     </Stack>
   )
 }
