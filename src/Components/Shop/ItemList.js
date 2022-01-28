@@ -5,7 +5,7 @@ export const ItemList = ({ items }) => {
   return(
     <Stack 
     direction={'row'}
-    spacing={8}
+    spacing={'90px'}
     mt={{base:'5vh', sm:'5vh'}}>
       {items?.map((item, i) => <Item key={i} {...item}/>)}
     </Stack>

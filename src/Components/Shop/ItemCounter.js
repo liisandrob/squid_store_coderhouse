@@ -15,7 +15,6 @@ export const ItemCounter = ({
 
   return(
     <Container 
-      shadow={'-1px 1px 15px 4px #FFFFFF'}
       borderRadius={'0 0 15px 15px'} 
       bgColor={'primary'} 
       maxW={{base:'300px'}} 
@@ -23,6 +22,7 @@ export const ItemCounter = ({
       centerContent display={'flex'} 
       justifyContent={'space-around'}>
         <Text
+          color={'white'}
           fontWeight={'bold'}
           fontSize={20}
         >
@@ -31,6 +31,7 @@ export const ItemCounter = ({
         <Text
           fontWeight={'bold'}
           fontSize={20}
+          color={'white'}
         >
         Precio: {priceArgFormat.format(price)}
         </Text>
@@ -48,7 +49,7 @@ export const ItemCounter = ({
           >Cantidad: </Text>
           <Button 
           variant='navBtn'
-          isDisabled = {counter === 1 ? true : false}
+          isDisabled = {counter === 1}
           onClick={() => setCounter(counter - 1)} 
           >
             <FaArrowDown/>
@@ -62,7 +63,7 @@ export const ItemCounter = ({
           </Text>
           <Button 
           variant='navBtn'
-          isDisabled = {counter === stock ? true : false}
+          isDisabled = {counter === stock}
           onClick={() => setCounter(counter + 1)}
           >
             <FaArrowUp/>

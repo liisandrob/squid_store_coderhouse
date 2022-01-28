@@ -1,5 +1,5 @@
-import { Header } from "./Components/Header";
-import { Shop } from "./Components/Shop";
+import { Header } from "Components/Header";
+import { Shop } from "Components/Shop";
 
 function App() {
   return (
