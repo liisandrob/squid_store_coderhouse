@@ -3,13 +3,7 @@ import React, { useState } from 'react';
 import { Container, Button, Text, Stack } from "@chakra-ui/react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
-export const ItemCounter = ({
-  name,
-  price,
-  stock
-}) => {
-
-  const priceArgFormat = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' })
+export const ItemCounter = ({ stock }) => {
 
   const [counter, setCounter] = useState(1);
 
@@ -18,23 +12,9 @@ export const ItemCounter = ({
       borderRadius={'0 0 15px 15px'} 
       bgColor={'primary'} 
       maxW={{base:'300px'}} 
-      h={'200px'} 
+      h={'120px'} 
       centerContent display={'flex'} 
       justifyContent={'space-around'}>
-        <Text
-          color={'white'}
-          fontWeight={'bold'}
-          fontSize={20}
-        >
-        {name}
-        </Text>
-        <Text
-          fontWeight={'bold'}
-          fontSize={20}
-          color={'white'}
-        >
-        Precio: {priceArgFormat.format(price)}
-        </Text>
         <Stack 
         bgColor={'#249f9c'}
         borderRadius={'10px'}

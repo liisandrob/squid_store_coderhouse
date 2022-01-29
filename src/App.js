@@ -1,13 +1,7 @@
-import { Header } from "Components/Header";
-import { Shop } from "Components/Shop";
+import Home from "Pages/Home";
 
 function App() {
-  return (
-    <div>
-      <Header/>
-      <Shop/>
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;

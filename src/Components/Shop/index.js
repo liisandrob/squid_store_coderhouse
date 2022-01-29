@@ -1,1 +1,1 @@
-export { Shop } from './ShopComponent';
+export { ItemListContainer } from './ItemListContainer';

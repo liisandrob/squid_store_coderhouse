@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import { Stack, Button, Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 
 import { CartWidget } from './CartWidget';
@@ -39,24 +41,28 @@ export const NavBar = () =>
         boxShadow={'0 0 2px 2px #037a76'}
         color={'white'}
         >
-          <MenuItem 
-          fontSize={25}
-          icon={<FaTshirt/>}
-          _hover={style.menuItem._hover}
-          _active={style.menuItem._active}
-          _focus={style.menuItem._focus}
-          >
-            Ropa
+          <Link to='/category/ropa'>
+            <MenuItem 
+            fontSize={25}
+            icon={<FaTshirt/>}
+            _hover={style.menuItem._hover}
+            _active={style.menuItem._active}
+            _focus={style.menuItem._focus}
+            >
+              Ropa
             </MenuItem>
-          <MenuItem 
-          fontSize={25}
-          icon={<FaRobot/>}
-          _hover={style.menuItem._hover}
-          _active={style.menuItem._active}
-          _focus={style.menuItem._focus}
-          >
-            Merchandising
-          </MenuItem>
+          </Link>
+          <Link to='/category/merchandising'>
+            <MenuItem 
+            fontSize={25}
+            icon={<FaRobot/>}
+            _hover={style.menuItem._hover}
+            _active={style.menuItem._active}
+            _focus={style.menuItem._focus}
+            >
+              Merchandising
+            </MenuItem>
+          </Link>
         </MenuList>
       </Menu>
       <Button variant='navBtn'><CartWidget icon={<FiShoppingCart/>}/></Button>
