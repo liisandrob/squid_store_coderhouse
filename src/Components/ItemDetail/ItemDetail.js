@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-import { Container, Stack } from '@chakra-ui/react';
+import { Container, Button, Stack } from '@chakra-ui/react';
 
 import { ItemCounter } from './ItemCounter';
 import { WaitingMsg } from "Components/Resources/WaitingMsg";
@@ -14,6 +14,12 @@ export const ItemDetail = () => {
   const urlParam = useParams();
   const [errorMsg, setErrorMsg] = useState(null);
   const [itemSelected, setItem] = useState(null);
+  const [quantitySelected, setQuantity] = useState(0);
+
+  const onAdd = (quantity) => {
+    setQuantity(quantity);
+    alert(`se ${quantity > 1 ? 'agregaron' : 'agregó'} ${quantity} ${quantity > 1 ? 'items' : 'item'} a State de ItemDetail.js`)
+  };
 
   useEffect(() => {
     fetchSimulator(urlParam, 2000)
@@ -27,7 +33,8 @@ export const ItemDetail = () => {
 
       return (() => {
         setErrorMsg(null);
-        setItem(null)
+        setItem(null);
+        setQuantity(0);
       })
   }, [urlParam]);
 
@@ -35,7 +42,7 @@ export const ItemDetail = () => {
     <Container marginTop={'8vh'} maxW={{base:'400px', sm:'container.lg'}} centerContent>
       {itemSelected ? 
         <Stack
-        minH={{base: '400px'}}
+        minH={{base: '500px'}}
         maxW={{base:'300px'}} 
         spacing={'2'}
         bgColor={'primary'} 
@@ -45,7 +52,22 @@ export const ItemDetail = () => {
         justifyContent={'space-around'}
         >
           <ItemBasicInfo name={itemSelected.name} price={itemSelected.price} stock={itemSelected.stock} imgUrl={itemSelected.imgUrl} />
-          <ItemCounter name={itemSelected.name} price={itemSelected.price} stock={itemSelected.stock}/>
+          {
+            quantitySelected > 0 ? 
+            <Stack
+            direction='row'
+            justifyContent={'space-around'}
+            >
+              <Link to='/'>
+                <Button variant='navBtn'>Volver</Button>
+              </Link>
+              <Link to='/chart'>
+                <Button variant='navBtn'>Finalizar compra</Button>
+              </Link>
+            </Stack>
+            :
+            <ItemCounter name={itemSelected.name} price={itemSelected.price} stock={itemSelected.stock} onAdd={onAdd}/>
+          }
         </Stack>
         : 
         <WaitingMsg greeting={errorMsg ? errorMsg : 'Cargando detalle del producto..'}/> }

@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { Container, Button, Text, Stack } from "@chakra-ui/react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
-export const ItemCounter = ({ stock }) => {
+export const ItemCounter = ({ stock, onAdd }) => {
 
-  const [counter, setCounter] = useState(1);
+  const [counter, setCounter] = useState(0);
 
   return(
     <Container 
@@ -29,7 +29,7 @@ export const ItemCounter = ({ stock }) => {
           >Cantidad: </Text>
           <Button 
           variant='navBtn'
-          isDisabled = {counter === 1}
+          isDisabled = {counter <= 1}
           onClick={() => setCounter(counter - 1)} 
           >
             <FaArrowDown/>
@@ -49,7 +49,13 @@ export const ItemCounter = ({ stock }) => {
             <FaArrowUp/>
           </Button>
         </Stack>
-        <Button variant='navBtn'>Agregar al carrito</Button>
+        <Button 
+        isDisabled = {counter === 0}
+        onClick={() => onAdd(counter)}
+        variant='navBtn'
+        >
+          Agregar al carrito
+        </Button>
     </Container>
   );
 }
