@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { CartContext } from 'Context/CartContext';
 
 import { Container, Button, Stack } from '@chakra-ui/react';
 
@@ -10,6 +11,9 @@ import ItemBasicInfo from 'Components/Resources/ItemBasicInfo';
 import fetchSimulator from "fetchSimulator";
 
 export const ItemDetail = () => {
+  
+  const Cart = useContext(CartContext);
+  const { cartList } = Cart;
 
   const urlParam = useParams();
   const [errorMsg, setErrorMsg] = useState(null);
@@ -18,12 +22,18 @@ export const ItemDetail = () => {
 
   const onAdd = (quantity) => {
     setQuantity(quantity);
-    alert(`se ${quantity > 1 ? 'agregaron' : 'agregó'} ${quantity} ${quantity > 1 ? 'items' : 'item'} a State de ItemDetail.js`)
+    Cart.addToCart(itemSelected, quantity);
   };
 
   useEffect(() => {
     fetchSimulator(urlParam, 2000)
       .then(response => {
+        const itemInCart = cartList.find(item => item.id === response.id)
+        if (itemInCart) {
+          response.quantity = itemInCart.quantity;
+        } else {
+          response.quantity = 0;
+        }
         setItem(response);
       })
       .catch(err => {
@@ -36,6 +46,7 @@ export const ItemDetail = () => {
         setItem(null);
         setQuantity(0);
       })
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlParam]);
 
   return(
@@ -61,12 +72,12 @@ export const ItemDetail = () => {
               <Link to='/'>
                 <Button variant='navBtn'>Volver</Button>
               </Link>
-              <Link to='/chart'>
+              <Link to='/cart'>
                 <Button variant='navBtn'>Finalizar compra</Button>
               </Link>
             </Stack>
             :
-            <ItemCounter name={itemSelected.name} price={itemSelected.price} stock={itemSelected.stock} onAdd={onAdd}/>
+            <ItemCounter name={itemSelected.name} price={itemSelected.price} quantity={itemSelected.quantity} stock={itemSelected.stock} onAdd={onAdd}/>
           }
         </Stack>
         : 

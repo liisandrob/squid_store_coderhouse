@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom/";
 import { Stack, Text, Container, Image, Button } from '@chakra-ui/react';
 
-import inProgress from 'Assets/inprogress.png'
+import smileImg from 'Assets/smile.jpg';
 
-const Chart = () => {
+const FinishShop = () => {
   return (
     <Container marginTop={'8vh'} maxW={{base:'400px', sm:'container.lg'}} centerContent>
       <Stack
@@ -22,13 +22,13 @@ const Chart = () => {
         align={'center'}
         fontSize={46}
         >
-          Ups!
+          Muchas gracias!
         </Text>
         <Image 
-        src={inProgress}
-        alt={'Work in progress'}
+        src={smileImg}
+        alt={'Lee Jung Jae sonriendo'}
         h={'300px'}
-        w={'300px'}
+        w={'500px'}
         borderRadius={'15px'}
         />
         <Text
@@ -37,7 +37,15 @@ const Chart = () => {
         align={'center'}
         fontSize={23}
         >
-          Próximamente..
+          Gracias por comprar en Squid Store! 
+        </Text>
+        <Text
+        color={'white'}
+        fontWeight={'bold'}
+        align={'center'}
+        fontSize={23}
+        >
+          Lo recaudado ira a la pool reward
         </Text>
         <Link to={`/`}
         >
@@ -52,4 +60,4 @@ const Chart = () => {
   )
 }
 
-export default Chart;
+export default FinishShop;

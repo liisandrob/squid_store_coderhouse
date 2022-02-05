@@ -3,8 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "Components/Header";
 import { ItemListContainer } from "Components/Shop";
 import { ItemDetail } from "Components/ItemDetail";
-import Chart from "Components/Chart/ChartComponent";
+import Cart from "Components/Cart/CartComponent";
 import NotFoundMsg from "Components/Resources/NotFoundMsg";
+import FinishShop from "Components/Resources/FinishShop";
 
 function Home() {
   return(
@@ -14,7 +15,8 @@ function Home() {
         <Route path='/' element={<ItemListContainer />}/>
         <Route path='/category/:categoryName' element={<ItemListContainer />}/>
         <Route path='/item/:itemId' element={<ItemDetail />}/>
-        <Route path='/chart' element={<Chart />}/>
+        <Route path='/cart' element={<Cart />}/>
+        <Route path='/finished' element={<FinishShop />}/>
         <Route path='*' element={<NotFoundMsg />}/>
       </Routes>
     </BrowserRouter>

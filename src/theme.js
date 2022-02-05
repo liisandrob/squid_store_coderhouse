@@ -42,6 +42,13 @@ export default extendTheme({
           }
         }
       },
+    },
+    Container: {
+      variants: {
+        'cartBox': {
+          bgColor: 'green',
+        }
+      }
     }
   },
 });

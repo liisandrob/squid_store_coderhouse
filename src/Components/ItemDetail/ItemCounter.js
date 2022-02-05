@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { Container, Button, Text, Stack } from "@chakra-ui/react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
-export const ItemCounter = ({ stock, onAdd }) => {
+export const ItemCounter = ({ quantity, stock, onAdd }) => {
 
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(quantity);
 
   return(
     <Container 
