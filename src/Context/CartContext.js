@@ -8,17 +8,12 @@ const CartContextProvider = ({children}) => {
 
   const addToCart = (item, quantity) => {
 
-    const position = cartList.map(e => {return e.id}).indexOf(item.id);
-    if(position === -1) {
-      item.quantity = quantity;
-      setCartList([
-        ...cartList,
-        item
-      ])
-    } else {
-      cartList[position].quantity = quantity
-      setCartList(cartList)
-    }
+    const product = cartList.find(prod => prod.id === item.id);
+
+    if (!product) return setCartList([...cartList, { ...item, quantity}]);
+
+    product.quantity = quantity;
+    setCartList([...cartList.filter(prod => prod.id !== item.id), product]);
   }
 
   const removeFromCart = (id) => {

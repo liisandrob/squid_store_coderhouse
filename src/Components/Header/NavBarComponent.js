@@ -8,7 +8,6 @@ import { CartWidget } from './CartWidget';
 
 import { FiChevronDown, FiShoppingCart } from "react-icons/fi";
 import { FaTshirt, FaRobot} from "react-icons/fa";
-import { useState } from 'react';
 
 const style = {
   menuItem: {
