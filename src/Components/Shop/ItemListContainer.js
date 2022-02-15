@@ -6,7 +6,7 @@ import { Container } from "@chakra-ui/react";
 import { WaitingMsg } from "Components/Resources/WaitingMsg";
 import { ItemList } from "./ItemList";
 
-import fetchSimulator from "fetchSimulator";
+import { fetchFirestore } from "db/fetchFirebase";
 
 export const ItemListContainer = () => {
 
@@ -16,20 +16,18 @@ export const ItemListContainer = () => {
 
 
   useEffect(() => {
-    fetchSimulator(urlParam, 2000)
-      .then(response => {
-        setData(response);
-      })
-      .catch(err => {
-        console.log(err);
-        setErrorMsg(err);
-      })
+    fetchFirestore(urlParam.categoryName)
+    .then(response => {
+      setData(response)
+    })
+    .catch(error => {
+      console.log(error)
+    });
 
     return (() => {
       setData(null);
       setErrorMsg(null);
-    }
-    )
+    })
   }, [urlParam]);
 
   return (

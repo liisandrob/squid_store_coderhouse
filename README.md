@@ -12,6 +12,7 @@ visuales instantáneas, y código escalable.
 - [React.js](https://es.reactjs.org/)
 - [react-router-dom](https://v5.reactrouter.com/web/guides/quick-start)
 - [Chakra UI](https://chakra-ui.com/docs/getting-started)
+- [Firebae](https://firebase.google.com/docs)
 
 ## Scripts disponibles
 
