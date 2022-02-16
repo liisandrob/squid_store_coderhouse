@@ -6,7 +6,7 @@ import { Container } from "@chakra-ui/react";
 import { WaitingMsg } from "Components/Resources/WaitingMsg";
 import { ItemList } from "./ItemList";
 
-import { fetchFirestore } from "db/fetchFirebase";
+import { getList } from "db/fetchFirebase";
 
 export const ItemListContainer = () => {
 
@@ -16,7 +16,7 @@ export const ItemListContainer = () => {
 
 
   useEffect(() => {
-    fetchFirestore(urlParam.categoryName)
+    getList(urlParam.categoryName)
     .then(response => {
       setData(response)
     })

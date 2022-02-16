@@ -1,12 +1,14 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { CartContext } from 'Context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Stack, Container, Text, Button } from '@chakra-ui/react';
+import { Stack, Container, Text, Button, Spinner } from '@chakra-ui/react';
 
 import CartItem from './CartItem';
+import { createOrder, uploadStockAfterBuy } from 'db/fetchFirebase'; 
 
 const Cart = () => {
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate(); 
   const Cart = useContext(CartContext);
@@ -22,8 +24,35 @@ const Cart = () => {
   }
 
   const buyItems = () => {
-    clearCart();
-    navigate('/finished');
+    setLoading(true)
+    let total = 0
+    const items = cartList.map(item => {
+      const { id, name, price, quantity } = item;
+      total += price * quantity;
+      return {id, name, price, quantity }
+    })
+    const order = {
+      buyer: {
+        name:'pepito',
+        email:'pepito@pepito.com',
+        phone:'1234567890'
+      },
+      items,
+      total,
+      date: new Date()
+    }
+    
+    createOrder(order)
+    .then(response => {
+      uploadStockAfterBuy(order);
+      setLoading(false);
+      clearCart();
+      navigate('/finished', { state: {order: response.id}});
+    })
+    .catch(error => {
+      setLoading(false)
+      console.log(error);
+    })
   }
 
   return (
@@ -44,18 +73,31 @@ const Cart = () => {
           spacing={'10'}
           direction='row'
           >
-            <Button
-              variant='navBtn'
-              onClick={() => clearCart()}
-            >
-              Limpiar lista
-            </Button>
-            <Button
-              variant='navBtn'
-              onClick={() => buyItems()}
-            >
-              {`Pagar ${priceArgFormat.format(calculateTotalPrice())}`}
-            </Button>
+            {loading ? 
+            <>
+              <Spinner
+              size='xl'
+              thickness='5px'
+              speed='0.65s'
+              color='secondary'
+              />
+            </>
+            :
+            <>
+              <Button
+                variant='navBtn'
+                onClick={() => clearCart()}
+              >
+                Limpiar lista
+              </Button>
+              <Button
+                variant='navBtn'
+                onClick={() => buyItems()}
+              >
+                {`Pagar ${priceArgFormat.format(calculateTotalPrice())}`}
+              </Button>
+            </>
+            }
           </Stack>
         </>
         :

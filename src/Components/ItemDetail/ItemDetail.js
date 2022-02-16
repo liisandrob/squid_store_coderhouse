@@ -8,7 +8,7 @@ import { ItemCounter } from './ItemCounter';
 import { WaitingMsg } from "Components/Resources/WaitingMsg";
 import ItemBasicInfo from 'Components/Resources/ItemBasicInfo';
 
-import { fetchFirestoreItemById } from 'db/fetchFirebase';
+import { getItemById } from 'db/fetchFirebase';
 
 export const ItemDetail = () => {
   
@@ -26,7 +26,7 @@ export const ItemDetail = () => {
   };
 
   useEffect(() => {
-    fetchFirestoreItemById(urlParam.itemId)
+    getItemById(urlParam.itemId)
       .then(response => {
         if(!response) return setErrorMsg('No se pudo encontrar item en la base de datos');
         const itemInCart = cartList.find(item => item.id === response.id)

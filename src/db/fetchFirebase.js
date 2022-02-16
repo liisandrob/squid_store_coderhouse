@@ -1,7 +1,7 @@
 import { db } from 'db/dbConection';
-import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc, setDoc, writeBatch, increment } from "firebase/firestore";
 
-const fetchFirestoreItemById = async (id) => {
+const getItemById = async (id) => {
   const docRef = doc(db, "products", id);
   const docSnap = await getDoc(docRef);
   
@@ -15,8 +15,26 @@ const fetchFirestoreItemById = async (id) => {
   }
 }
 
+const uploadStockAfterBuy = async (data) => {
+  const { items } = data;
+  const batch = writeBatch(db);
+  items.forEach(item => {
+    console.log(item)
+    const itemRef = doc(db, "products", item.id);
+    batch.update(itemRef, {
+      stock: increment(-item.quantity)
+    })
+  })
+  await batch.commit();
+}
 
-const fetchFirestore = async (category = false) => {
+const createOrder = async (data) => {
+  const newOrderRef = doc(collection(db, "orders"));
+  await setDoc(newOrderRef, data);
+  return newOrderRef
+}
+
+const getList = async (category = false) => {
   let querySnapshot
   if(category) {
     const q = query(collection(db, "products"), where("category", "==", category));
@@ -33,4 +51,4 @@ const fetchFirestore = async (category = false) => {
 
 }
 
-export {fetchFirestore, fetchFirestoreItemById};
+export {getList, getItemById, createOrder, uploadStockAfterBuy};
