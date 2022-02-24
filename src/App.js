@@ -1,8 +1,8 @@
-import Home from "Pages/Home";
+import MainPage from "Pages/MainPage";
 import CartContextProvider from 'Context/CartContext';
 
 function App() {
-  return <CartContextProvider><Home /></CartContextProvider>;
+  return <CartContextProvider><MainPage /></CartContextProvider>;
 }
 
 export default App;

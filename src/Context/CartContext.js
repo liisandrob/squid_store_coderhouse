@@ -11,33 +11,30 @@ const CartContextProvider = ({children}) => {
     const product = cartList.find(prod => prod.id === item.id);
 
     if (!product) {
-      localStorage.setItem('cart', JSON.stringify([...cartList, { ...item, quantity}]));
       return setCartList([...cartList, { ...item, quantity}]);
     }
 
     product.quantity = quantity;
-    localStorage.setItem('cart', JSON.stringify([...cartList.filter(prod => prod.id !== item.id), product]));
     setCartList([...cartList.filter(prod => prod.id !== item.id), product]);
   }
 
   const removeFromCart = (id) => {
-    localStorage.setItem('cart', JSON.stringify(cartList.filter(item => item.id !== id)));
     setCartList(cartList.filter(item => item.id !== id));
   }
 
   const clearCart = () => {
-    localStorage.removeItem('cart')
+    localStorage.removeItem('cart');
     setCartList([]);
   }
 
   useEffect(() => {
     const cartInMemory = JSON.parse(localStorage.getItem('cart'));
-    console.log(cartInMemory)
-    if(cartInMemory) {
-      console.log(cartInMemory)
-      setCartList(cartInMemory)
-    }
+    if(cartInMemory.length > 0) setCartList(cartInMemory)
   },[])
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cartList));
+  },[cartList])
 
   return(
     <CartContext.Provider value={{cartList, addToCart, removeFromCart, clearCart}}>

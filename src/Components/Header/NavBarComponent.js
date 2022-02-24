@@ -34,6 +34,7 @@ const style = {
 export const NavBar = () => {
   
   const Cart = useContext(CartContext);
+  const { cartList } = Cart
 
   const calculateTotalQ = (listOfItems) => {
     let totalQ = 0;
@@ -82,9 +83,9 @@ export const NavBar = () => {
           </MenuList>
         </Menu>
         {
-         Cart.cartList.length > 0 ?
+         cartList.length > 0 ?
           <Link to='/cart'>
-            <Button variant='navBtn'><CartWidget icon={<FiShoppingCart/>}/>{calculateTotalQ(Cart.cartList)}</Button>
+            <Button variant='navBtn'><CartWidget icon={<FiShoppingCart/>}/>{calculateTotalQ(cartList)}</Button>
           </Link>
           :
           null

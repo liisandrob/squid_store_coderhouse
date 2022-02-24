@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Container, Button, Text, Stack } from "@chakra-ui/react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 
-export const ItemCounter = ({ quantity, stock, onAdd }) => {
+export const ItemCounter = ({ quantity, stock, onAdd, isInCart }) => {
 
   const [counter, setCounter] = useState(quantity);
 
@@ -54,7 +54,7 @@ export const ItemCounter = ({ quantity, stock, onAdd }) => {
         onClick={() => onAdd(counter)}
         variant='navBtn'
         >
-          Agregar al carrito
+          {isInCart ? 'Modificar carrito' : 'Agregar al carrito'}
         </Button>
     </Container>
   );

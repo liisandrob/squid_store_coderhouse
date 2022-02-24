@@ -12,11 +12,10 @@ const FinishShop = () => {
   const [tooltipMsg, setToolTipMsg] = useState('Copiar');
   
   useEffect(() => {
-    if (state) {
-      const order = state.order ? state.order : null
-      if(order) setOrderId(order)
-    }
-    else navigate('/error')
+    if (!state?.order) return navigate('/error');
+
+    const { order } = state;
+    setOrderId(order);
 
     return(
       setToolTipMsg('Copiar')

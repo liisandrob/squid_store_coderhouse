@@ -13,29 +13,28 @@ import { getItemById } from 'db/fetchFirebase';
 export const ItemDetail = () => {
   
   const Cart = useContext(CartContext);
-  const { cartList } = Cart;
+  const { cartList, addToCart } = Cart;
 
   const urlParam = useParams();
+  const { itemId } = urlParam;
   const [errorMsg, setErrorMsg] = useState(null);
   const [itemSelected, setItem] = useState(null);
+  const [isInCart, setIsInCart] = useState(false);
   const [quantitySelected, setQuantity] = useState(0);
 
   const onAdd = (quantity) => {
     setQuantity(quantity);
-    Cart.addToCart(itemSelected, quantity);
+    addToCart(itemSelected, quantity);
   };
 
   useEffect(() => {
-    getItemById(urlParam.itemId)
+    getItemById(itemId)
       .then(response => {
         if(!response) return setErrorMsg('No se pudo encontrar item en la base de datos');
-        const itemInCart = cartList.find(item => item.id === response.id)
-        if (itemInCart) {
-          response.quantity = itemInCart.quantity;
-        } else {
-          response.quantity = 0;
-        }
-        setItem(response);
+
+        const itemInCart = cartList.find(item => item.id === response.id);
+        setItem({...response, quantity: itemInCart?.quantity || 0});
+        setIsInCart(!!itemInCart);
       })
       .catch(err => {
         console.log(err);
@@ -78,7 +77,7 @@ export const ItemDetail = () => {
               </Link>
             </Stack>
             :
-            <ItemCounter name={itemSelected.name} price={itemSelected.price} quantity={itemSelected.quantity} stock={itemSelected.stock} onAdd={onAdd}/>
+            <ItemCounter isInCart={isInCart} name={itemSelected.name} price={itemSelected.price} quantity={itemSelected.quantity} stock={itemSelected.stock} onAdd={onAdd}/>
           }
         </Stack>
         : 

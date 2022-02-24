@@ -5,26 +5,19 @@ const getItemById = async (id) => {
   const docRef = doc(db, "products", id);
   const docSnap = await getDoc(docRef);
   
-  if (docSnap.exists()) {
-    return {
-      id,
-      ...docSnap.data()
-    }
-  } else {
-    return false
-  }
+  if (docSnap.exists()) return { id, ...docSnap.data() }
+  else return false;
 }
 
 const uploadStockAfterBuy = async (data) => {
   const { items } = data;
   const batch = writeBatch(db);
   items.forEach(item => {
-    console.log(item)
     const itemRef = doc(db, "products", item.id);
     batch.update(itemRef, {
       stock: increment(-item.quantity)
     })
-  })
+  });
   await batch.commit();
 }
 
@@ -34,8 +27,8 @@ const createOrder = async (data) => {
   return newOrderRef
 }
 
-const getList = async (category = false) => {
-  let querySnapshot
+const getList = async (category) => {
+  let querySnapshot;
   if(category) {
     const q = query(collection(db, "products"), where("category", "==", category));
     querySnapshot = await getDocs(q);
@@ -47,7 +40,7 @@ const getList = async (category = false) => {
     ...item.data()
   }));
 
-  return dataFromFirebase
+  return dataFromFirebase;
 
 }
 

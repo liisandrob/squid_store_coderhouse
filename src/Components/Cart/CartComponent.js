@@ -2,18 +2,38 @@ import { useContext, useState } from 'react';
 import { CartContext } from 'Context/CartContext';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { Stack, Container, Text, Button, Spinner } from '@chakra-ui/react';
+import { Stack, Container, Text, Button } from '@chakra-ui/react';
 
 import CartItem from './CartItem';
-import { createOrder, uploadStockAfterBuy } from 'db/fetchFirebase'; 
+import { createOrder, uploadStockAfterBuy } from 'db/fetchFirebase';
+import { CartForm } from './CartForm';
 
 const Cart = () => {
   const [loading, setLoading] = useState(false);
+  const [confirmedItems, setConfirmedItems] = useState(false);
+  const [buyer, setBuyer] = useState({ phone: '', name:'', email: '', email2: '' });
 
   const navigate = useNavigate(); 
   const Cart = useContext(CartContext);
   const {cartList, removeFromCart, clearCart} = Cart;
   const priceArgFormat = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' });
+
+
+  const handleOnChange = (e) => {
+    const { id } = e.target;
+    let { value } = e.target;
+
+    if( id === 'phone'){
+      if( value.length > 8 ) return
+      else value = value.replace(/[^0-9]/gi, '');
+    }
+    if( id === 'email' || id === 'email2' ) value = value.replace(/[^-A-Za-z0-9@.]/gi, '');
+    
+    setBuyer({
+      ...buyer, 
+      [id]: value
+    })
+  }
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
@@ -21,6 +41,10 @@ const Cart = () => {
       return totalPrice += item.price * item.quantity
     });
     return totalPrice;
+  }
+
+  const volverVistaAnterior = () => {
+    setConfirmedItems(false);
   }
 
   const buyItems = () => {
@@ -32,11 +56,7 @@ const Cart = () => {
       return {id, name, price, quantity }
     })
     const order = {
-      buyer: {
-        name:'pepito',
-        email:'pepito@pepito.com',
-        phone:'1234567890'
-      },
+      buyer,
       items,
       total,
       date: new Date()
@@ -56,34 +76,30 @@ const Cart = () => {
   }
 
   return (
-    <Container marginTop={'8vh'} maxW={{base:'400px', sm:'container.lg'}} centerContent>
+    <Container
+    marginTop={'8vh'}
+    maxW={{base:'400px', sm:'container.lg'}}
+    centerContent
+    >
       <Stack
-      spacing={'8'}
+      spacing={'4'}
       bgColor={'primary'} 
       shadow={'-1px 1px 15px 4px #FFFFFF'}
       borderRadius={'15px'}
-      p={'10px'}
+      p={'20px'}
       alignItems={'center'}
       justifyContent={'space-around'}
+      minW={{base:'400px'}}
       >
-        {cartList.length > 0 ?
+        {!confirmedItems ?
         <>
-          {cartList.map((item, i) => { return <CartItem key={i} removeFromCart={removeFromCart} item={item} /> })}
-          <Stack
-          spacing={'10'}
-          direction='row'
-          >
-            {loading ? 
-            <>
-              <Spinner
-              size='xl'
-              thickness='5px'
-              speed='0.65s'
-              color='secondary'
-              />
-            </>
-            :
-            <>
+          {cartList.length > 0 ?
+          <>
+            {cartList.map((item, i) => { return <CartItem key={i} removeFromCart={removeFromCart} item={item} /> })}
+            <Stack
+            spacing={'10'}
+            direction='row'
+            >
               <Button
                 variant='navBtn'
                 onClick={() => clearCart()}
@@ -92,13 +108,31 @@ const Cart = () => {
               </Button>
               <Button
                 variant='navBtn'
-                onClick={() => buyItems()}
+                onClick={() => setConfirmedItems(true)}
               >
-                {`Pagar ${priceArgFormat.format(calculateTotalPrice())}`}
+                {`Confirmar items (Total: ${priceArgFormat.format(calculateTotalPrice())})`}
               </Button>
-            </>
-            }
-          </Stack>
+            </Stack>
+          </>
+          :
+          <>
+            <Text
+            color={'white'}
+            fontWeight={'bold'}
+            align={'center'}
+            fontSize={40}
+            >
+              Carrito vacio
+            </Text>
+            <Link  to={'/'}>
+              <Button
+              variant='navBtn'
+              >
+                Ir a la tienda
+              </Button>
+            </Link>
+          </>
+          }
         </>
         :
         <>
@@ -106,20 +140,19 @@ const Cart = () => {
           color={'white'}
           fontWeight={'bold'}
           align={'center'}
-          fontSize={40}
+          fontSize={20}
           >
-            Carrito vacio
+            Datos de contacto:
           </Text>
-          <Link  to={'/'}>
-            <Button
-            variant='navBtn'
-            >
-              Ir a la tienda
-            </Button>
-          </Link>
+          <CartForm 
+          handleOnChange={handleOnChange} 
+          buyer={buyer} 
+          buyItems={buyItems} 
+          loading={loading} 
+          volverVistaAnterior={volverVistaAnterior}
+          />
         </>
-        
-      }
+        }
       </Stack>
     </Container>
   )

@@ -27,8 +27,9 @@ export const Item = ({ name, price, stock, imgUrl, id }) => {
       >
         <Button
         variant='navBtn'
+        isDisabled = {stock <= 0}
         >
-            Ver detalle
+          {stock <= 0 ? 'Sin stock' : 'Ver detalle'}
         </Button>
       </Link>
     </Stack>
