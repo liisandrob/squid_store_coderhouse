@@ -1,5 +1,7 @@
 # Trabajo final para curso de React.js en Coderhouse
 
+![Vista previa del sitio](preview.gif)
+
 ## Consigna
 
 Desarrollar el frontend de una tienda online con carrito de compras,
